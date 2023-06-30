@@ -4,11 +4,9 @@ import ButtonAppBar from "./components/ButtonAppBar/ButtonAppBar";
 import NavMenu from "./components/NavBar/NavMenu/NavMenu";
 import { Container, Box, Grid } from "@mui/material";
 import DialogBox from "./components/DialogBox/DialogBox";
+import UsersBox from "./components/UsersBox/UsersBox"
 import { HashRouter, BrowserRouter, Route, Routes } from "react-router-dom";
 
-const Users = () => {
-	return <div>users</div>;
-};
 function App() {
 	return (
 		<BrowserRouter>
@@ -29,7 +27,7 @@ function App() {
 							<Route exact path="/" element={<div>main menu</div>} />
 							<Route path="/profile" element={<div>profile</div>} />
 							<Route path="/dialogs" element={<DialogBox />} />
-							<Route path="/users" element={<div>users</div>} />
+							<Route path="/users" element={<UsersBox/>} />
 							<Route path="/news" element={<div>news</div>} />
 						</Routes>
 					</Grid>
