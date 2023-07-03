@@ -1,35 +1,15 @@
 * {
   transition: all 0.2s linear;
 }
-
-/* .container {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  margin-top: 20px;
-  overflow: auto;
-  scroll-padding-top: 5.5rem;
-  scroll-behavior: smooth;
-} */
 .barb {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex; /* Изменение значения на "flex" */
+  justify-content:flex-start;
   gap: 1.5rem;
-}
-.box-container {
-  align-items: center;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));
-  gap: 5.5rem;
-}
-.barb {
+  flex-wrap: wrap; /* Добавление переноса элементов на новую строку */
   cursor: pointer;
-  /* margin-left: 2.5rem; */
+
   font-size: 1.2rem;
   padding: 3.5rem;
-  /* align-items: center; */
   background: #fff;
   border-radius: 0.5rem;
   border: 0.1rem solid rgba(0, 0, 0, 0.2);
@@ -38,7 +18,12 @@
   overflow: hidden;
   text-align: center;
 }
+/* 
 .box-container {
+  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 5.5rem;
   cursor: pointer;
   margin-left: 2.5rem;
   font-size: 1.2rem;
@@ -51,38 +36,29 @@
   position: relative;
   overflow: hidden;
   text-align: center;
-}
+} */
 .box {
+  width: 15rem; 
+  height: 20rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   cursor: pointer;
-  /* margin-left: 2.5rem; */
-  font-size: 1.2rem;
-  padding: 2.5rem;
-  /* background: red; */
+  /* font-size: 1.2rem; */
+  /* padding: 2.5rem; */
   border-radius: 0.5rem;
   border: 0.1rem solid rgba(0, 0, 0, 0.2);
-  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1); */
   overflow: hidden;
 }
 
-
-/* .barb:hover  {
+/* .box-container:hover {
   transform: scale(1.1);
 } */
-.box-container:hover {
-  transform: scale(1.1);
-}
 .box:hover {
   transform: scale(1.1);
 }
-/* .barb .box-container .box img {
-  height: 100%;
-  width: 100%;
-  border-radius: 5px;
-} */
 
 .paper {
   width: 100%;
@@ -91,17 +67,26 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  position: relative;
+  position: relative;  
 }
 
 .messagesBody {
-  /* width: 97%; */
-  /* padding-left: 20px; */
+
   overflow-y: scroll;
   height: calc(100% - 80px);
 }
 
 .textContent {
-	padding: 0;
-	margin: 0;
+  padding: 0;
+  margin: 0;
+}
+.avatar {
+  width: 50%; 
+  height: 50%;
+}
+.a {
+  text-decoration: none;
+}
+.pagination {
+  margin: 1rem;
 }
