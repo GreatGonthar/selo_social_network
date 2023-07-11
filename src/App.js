@@ -1,21 +1,22 @@
 import "./App.css";
-import React, { Component, useState } from "react";
+import React, { Component, useState, useReducer } from "react";
 import ButtonAppBar from "./components/ButtonAppBar/ButtonAppBar";
 import NavMenu from "./components/NavBar/NavMenu/NavMenu";
-import { Container, Box, Grid } from "@mui/material";
-import DialogBox from "./components/DialogBox/DialogBox";
-import UsersBox from "./components/UsersBox/UsersBox";
+import RoutesComponent from "./RoutesComponent/RoutesComponent"
 import { HashRouter, BrowserRouter, Route, Routes } from "react-router-dom";
-import Profile from "./components/Profile/Profile";
+import { Container, Box, Grid } from "@mui/material";
+import {initialState, reducer} from "./state/reducers"
+
 import useUsers from "./hooks/useUsers";
+import { ReportGmailerrorred } from "@mui/icons-material";
 
 export const GlobalContext = React.createContext();
 
 function App() {
-  const state = useUsers(7);
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <BrowserRouter>
-      <GlobalContext.Provider value={state}>
+      <GlobalContext.Provider value={{state, dispatch}}>
         <div>
           <ButtonAppBar />
           <Grid
@@ -29,13 +30,7 @@ function App() {
               <NavMenu />
             </Grid>
             <Grid item xs={10}>
-              <Routes>
-                <Route exact path="/" element={<div>main menu</div>} />
-                <Route path="/profile/:userId?" element={<Profile />} />
-                <Route path="/dialogs" element={<DialogBox />} />
-                <Route path="/users" element={<UsersBox />} />
-                <Route path="/news" element={<div>news</div>} />
-              </Routes>
+            <RoutesComponent/>
             </Grid>
           </Grid>
         </div>
@@ -43,5 +38,8 @@ function App() {
     </BrowserRouter>
   );
 }
+// SeloChatAdmin
+// 8dFRu6LSKswVxk5T
+// F9gGIH7lLSAorcCQ@gmail.com
 
 export default App;

@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../firebaseConfig/firebaseConfig";
+import { GlobalContext } from "../App";
+import { SET_USERS } from "../state/reducers";
 
-const useUsers = (page = 1) => {
-  let [state, setState] = useState([]);
-  useEffect(() => {
-    fetch(`https://rickandmortyapi.com/api/character/?page=${page}`)
-      .then((data) => data.json())
-      .then((data) => {
-        setState(data);
-      })
-      .catch((error) => {
-        console.log("error");
-      });
-  }, [page]);
-  return state;
+const useUsers = () => {
+    const { state, dispatch } = useContext(GlobalContext);
+    const usersCollectionRef = collection(db, "users");
+    window.state = state
+    useEffect(() => {
+        const unsubscribe = onSnapshot(usersCollectionRef, (snapshot) => {
+            const updatedData = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            dispatch({ type: SET_USERS, payload: updatedData });
+        });
+
+        return () => unsubscribe(); // Отписываемся от подписки при размонтировании компонента
+    }, []);
+
+    return state.users;
 };
 export default useUsers;

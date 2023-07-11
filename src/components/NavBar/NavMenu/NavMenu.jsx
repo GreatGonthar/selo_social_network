@@ -15,56 +15,71 @@ import MenuElem from "./MenuElem";
 import { blue } from "@mui/material/colors";
 import styles from "./NavMenu.module.css";
 import { useEffect, useState } from "react";
-import {useLocation} from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 
 const NavMenu = () => {
-		const [route, setRoute] = useState(useLocation().pathname.split("/").slice(1))
-	
+    const [route, setRoute] = useState(
+        useLocation().pathname.split("/").slice(1)
+    );
 
-	return (
-		<Box sx={{ width: "100%" }}>
-			<nav aria-label="main mailbox folders">
-				<List>				
-					<NavLink
-						to="/profile"
-						className={styles.default}
-						activeClassName={styles.active}
-					>
-						<MenuElem icon={<AccountCircleIcon />} text="Profile" />
-					</NavLink>
-					<NavLink
-						to="/dialogs"
-						className={styles.default}
-						activeClassName={styles.active}
-					>
-						<MenuElem icon={<MessageIcon />} text="Dialogs" />
-					</NavLink>
-					<NavLink
-						to="/users"
-						className={styles.default}
-						activeClassName={styles.active}
-					>
-						<MenuElem icon={<PeopleAltIcon />} text="Users" />
-					</NavLink>
-					<NavLink
-						to="/news"
-						className={styles.default}
-						activeClassName={styles.active}
-					>
-						<MenuElem icon={<NewspaperIcon />} text="News" />
-					</NavLink>					
-				</List>
-			</nav>
-			<Divider />
+    return (
+        <Box sx={{ width: "100%" }}>
+            <nav aria-label="main mailbox folders">
+                <List>
+                    <NavLink
+                        to="/profile"
+                        className={styles.default}
+                        activeClassName={styles.active}
+                    >
+                        <MenuElem icon={<AccountCircleIcon />} text="Profile" />
+                    </NavLink>
+                    <NavLink
+                        to="/dialogs"
+                        className={styles.default}
+                        activeClassName={styles.active}
+                    >
+                        <MenuElem icon={<MessageIcon />} text="Dialogs" />
+                    </NavLink>
+                    <NavLink
+                        to="/users"
+                        className={styles.default}
+                        activeClassName={styles.active}
+                    >
+                        <MenuElem icon={<PeopleAltIcon />} text="Users" />
+                    </NavLink>
+                    <NavLink
+                        to="/news"
+                        className={styles.default}
+                        activeClassName={styles.active}
+                    >
+                        <MenuElem icon={<NewspaperIcon />} text="News" />
+                    </NavLink>
+                    <NavLink
+                        to="/firebase"
+                        className={styles.default}
+                        activeClassName={styles.active}
+                    >
+                        <MenuElem icon={<NewspaperIcon />} text="Firebase" />
+                    </NavLink>
+                    <NavLink
+                        to="/UlbiTvChat"
+                        className={styles.default}
+                        activeClassName={styles.active}
+                    >
+                        <MenuElem icon={<NewspaperIcon />} text="UlbiTvChat" />
+                    </NavLink>
+                </List>
+            </nav>
+            <Divider />
 
-			<nav aria-label="secondary mailbox folders">
-				<List>
-					<MenuElem text="trash" />
-					<MenuElem text="span" />
-				</List>
-			</nav>
-		</Box>
-	);
+            <nav aria-label="secondary mailbox folders">
+                <List>
+                    <MenuElem text="trash" />
+                    <MenuElem text="span" />
+                </List>
+            </nav>
+        </Box>
+    );
 };
 
 export default NavMenu;
