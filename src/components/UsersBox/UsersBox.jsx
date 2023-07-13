@@ -6,8 +6,8 @@ import useUsers from "../../hooks/useUsers";
 
 export default function UsersBox() {
 
-    let users = useUsers();
-
+       let users = useUsers();
+       
     if (users.length === 0) {
         return <div>загрузка...</div>;
     } else {

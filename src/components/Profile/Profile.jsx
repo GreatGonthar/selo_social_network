@@ -1,23 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { Avatar, makeStyles, Paper, Typography, Grid } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
-import useOneCharacter from "../../hooks/useOneCharacter";
 import ProfileCard from "./ProfileCard";
 import AboutUser from "./AboutUser";
 import { LoremIpsum } from "lorem-ipsum";
 import classes from "./Profile.module.css";
 import { GlobalContext } from "../../App";
-
-const lorem = new LoremIpsum({
-    sentencesPerParagraph: {
-        max: 8,
-        min: 4,
-    },
-    wordsPerSentence: {
-        max: 16,
-        min: 4,
-    },
-});
 
 function Profile() {
     const navigate = useNavigate();
@@ -36,8 +24,8 @@ function Profile() {
     useEffect(() => {
         if (!state.mainUser.name && !params.userId) {
             navigate("/login");
-        }
-    }, []);
+        }       
+    }, [params.userId]);
 
     return (
         <>
@@ -68,7 +56,7 @@ function Profile() {
                     component="div"
                     color="text.secondary"
                 >
-                    {lorem.generateWords(180)}
+                    {"lorem.generateWords(180)"}
                 </Typography>
             </Paper>
         </>

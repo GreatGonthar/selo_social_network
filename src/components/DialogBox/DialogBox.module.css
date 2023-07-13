@@ -5,9 +5,8 @@
   max-height: 700px;
   display: flex;
   align-items: center;
-  flex-direction: column;
-  position: relative;
-  
+  flex-direction: column;  
+  position: relative;  
 }
 
 .paper2 {
@@ -15,8 +14,9 @@
   max-width: 100%;
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column;  
   position: relative;
+
 }
 
 .container {
@@ -26,6 +26,7 @@
   align-items: baseline;
   justify-content: center;
   margin-top: 20px;
+
 }
 
 .messagesBody {
@@ -33,4 +34,8 @@
   padding-left: 20px;
   overflow-y: scroll;
   height: calc(100% - 80px);
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  
 }

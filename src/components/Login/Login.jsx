@@ -12,7 +12,7 @@ import useUsers from "../../hooks/useUsers";
 const Login = () => {
     const usersCollectionRef = collection(db, "users");
     const { state, dispatch } = useContext(GlobalContext);
-    
+
     let users = useUsers();
     const navigate = useNavigate();
 
@@ -30,7 +30,6 @@ const Login = () => {
 
         dispatch({ type: SET_MAIN_USER, payload: mainUser });
 
-       
         let userIsBase = false;
         for (let i = 0; i < users.length; i++) {
             const obj = users[i];
@@ -48,11 +47,19 @@ const Login = () => {
             createUser(mainUser);
         }
     };
+    const guest = () => {
+        dispatch({
+            type: SET_MAIN_USER,
+            payload: {
+                name: "гость",
+                photo: "https://upload.wikimedia.org/wikipedia/ru/thumb/7/78/Trollface.svg/1200px-Trollface.svg.png",
+            },
+        });
+    };
     useEffect(() => {
         if (state.mainUser.name) {
             navigate("/profile");
-           
-        }       
+        }
     }, [state.mainUser.name]);
 
     return (
@@ -67,6 +74,11 @@ const Login = () => {
                     <Box p={5}>
                         <Button onClick={login} variant={"outlined"}>
                             Войти с помощью Google
+                        </Button>
+                    </Box>
+                    <Box p={5}>
+                        <Button onClick={guest} variant={"outlined"}>
+                            Войти как гость
                         </Button>
                     </Box>
                 </Grid>
