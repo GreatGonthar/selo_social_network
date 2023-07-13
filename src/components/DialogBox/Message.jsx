@@ -1,13 +1,31 @@
 import React from "react";
 import Avatar from "@mui/material/Avatar";
 import styles from "./Message.module.css";
-import { deepOrange} from '@mui/material/colors';
+import { deepOrange } from "@mui/material/colors";
 
+const date = (time = 0) => {
+    const dt = new Date(time * 1000);
+
+    const hours = dt.getHours().toString().padStart(2, "0");
+    const minutes = dt.getMinutes().toString().padStart(2, "0");
+    const seconds = dt.getSeconds().toString().padStart(2, "0");
+
+    const day = dt.getDate().toString().padStart(2, "0");
+    const month = (dt.getMonth() + 1).toString().padStart(2, "0");
+    const year = dt.getFullYear();
+
+    return `${hours}:${minutes}:${seconds} ${day}.${month}.${year}г`;
+};
+
+console.log(date(1000));
 export const MessageLeft = (props) => {
     const message = props.message ? props.message : "no message";
-    const timestamp = props.timestamp ? props.timestamp : "";
     const photoURL = props.photoURL ? props.photoURL : "";
     const displayName = props.displayName ? props.displayName : "гость";
+    const timestamp =
+        props.timestamp === null
+            ? "время загружается..."
+            : date(+props.timestamp.seconds);
 
     return (
         <>
@@ -19,11 +37,7 @@ export const MessageLeft = (props) => {
                         src={photoURL}
                     ></Avatar>
                 ) : (
-                    <Avatar
-                        sx={{ bgcolor: deepOrange[500]}}
-                    >
-                        Г
-                    </Avatar>
+                    <Avatar sx={{ bgcolor: deepOrange[500] }}>Г</Avatar>
                 )}
 
                 <div>
@@ -47,7 +61,10 @@ export const MessageLeft = (props) => {
 
 export const MessageRight = (props) => {
     const message = props.message ? props.message : "no message";
-    const timestamp = props.timestamp ? props.timestamp : "";
+    const timestamp =
+        props.timestamp === null
+            ? "время загружается..."
+            : date(+props.timestamp.seconds);
     return (
         <div className={styles.messageRowRight}>
             <div className={styles.messageOrange}>
