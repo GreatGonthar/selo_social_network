@@ -34,6 +34,13 @@ const NavMenu = () => {
                         <MenuElem icon={<AccountCircleIcon />} text="Profile" />
                     </NavLink>
                     <NavLink
+                        to="/chat"
+                        className={styles.default}
+                        activeClassName={styles.active}
+                    >
+                        <MenuElem icon={<MessageIcon />} text="Chat" />
+                    </NavLink>
+                    <NavLink
                         to="/dialogs"
                         className={styles.default}
                         activeClassName={styles.active}

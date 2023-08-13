@@ -9,15 +9,22 @@ const useUsers = () => {
     const usersCollectionRef = collection(db, "users");
     window.state = state;
     useEffect(() => {
-        // if (state.users.length === 0) {
-            const unsubscribe = onSnapshot(usersCollectionRef, (snapshot) => {
-                const updatedData = snapshot.docs.map((doc) => ({
-                    id: doc.id,
-                    ...doc.data(),
-                }));
+        // if (state.mainUser.id) {
+        const unsubscribe = onSnapshot(usersCollectionRef, (snapshot) => {
+            const updatedData = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+           
+                let userSubscriberIndex = updatedData.findIndex(
+                    (item) => item.id === state.mainUser.id
+                );
+                console.log(userSubscriberIndex)
+                if(userSubscriberIndex !== -1){updatedData.splice(userSubscriberIndex, 1)};
                 dispatch({ type: SET_USERS, payload: updatedData });
             });
             return () => unsubscribe(); // Отписываемся от подписки при размонтировании компонента
+        // }
         // }
     }, []);
 

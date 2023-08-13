@@ -1,48 +1,66 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import {
-  Paper,
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-  CardMedia,
+    Paper,
+    Box,
+    Card,
+    CardContent,
+    Typography,
+    CardActions,
+    Button,
+    CardMedia,
 } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 import styles from "./UsersBox.module.css";
+import { GlobalContext } from "../../App"
+
+
 
 export default function OneUserBox({
-  content = "somebody text",
-  userName = "user",
-  imgUrl = "https://source.unsplash.com/random",
-  id = "0",
+    content = "somebody text",
+    userName = "user",
+    imgUrl = "https://source.unsplash.com/random",
+    id = "0",
 }) {
-  return (
-    <Box className={styles.box}>
-      <Link to={`/profile/${id}`} className={styles.a}>
-        <Card>
-          <CardMedia
-            component="img"
-            height={175}
-            image={imgUrl}
-            style={{ objectFit: "contain" }}
-          ></CardMedia>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {userName.charAt(0).toUpperCase() + userName.slice(1)}
-            </Typography>
-            <Typography variant="body2" component="div" color="text.secondary">
-              {content}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">ok</Button>
-            <Button size="small">cancel</Button>
-          </CardActions>
-        </Card>
-      </Link>
-    </Box>
-  );
+    const { state, dispatch } = useContext(GlobalContext);
+    return (
+        <Box className={styles.box}>
+            <Card>
+                <Link to={`/profile/${id}`} className={styles.a}>
+                    <CardMedia
+                        component="img"
+                        height={175}
+                        image={imgUrl}
+                        style={{ objectFit: "contain" }}
+                    ></CardMedia>
+                </Link>
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                        {userName.charAt(0).toUpperCase() + userName.slice(1)}
+                    </Typography>
+                    <Typography
+                        variant="body2"
+                        component="div"
+                        color="text.secondary"
+                    >
+                        {content}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    {state.mainUser.name === "гость" ? (
+                        <Link to={`/chat`} className={styles.a}>
+                            <Button size="small">только общий чат</Button>
+                        </Link>
+                    ) : (
+                        <Link to={`/dialogs/${id}`} className={styles.a}>
+                            <Button size="small">Написать</Button>
+                        </Link>
+                    )
+                    }
+
+                    <Button size="small">cancel</Button>
+                </CardActions>
+            </Card>
+        </Box>
+    );
 }

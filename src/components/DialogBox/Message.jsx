@@ -17,7 +17,6 @@ const date = (time = 0) => {
     return `${hours}:${minutes}:${seconds} ${day}.${month}.${year}г`;
 };
 
-console.log(date(1000));
 export const MessageLeft = (props) => {
     const message = props.message ? props.message : "no message";
     const photoURL = props.photoURL ? props.photoURL : "";

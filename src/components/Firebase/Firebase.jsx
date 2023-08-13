@@ -44,10 +44,9 @@ export default function Firebase() {
     const [messages, loading] = useCollectionData(
         // usersCollectionRef.orderBy('createdAt')
         q
-        )
-     
+        )   
 
-    console.log("messages, loading",messages, loading)
+
 
 
     useEffect(() => {

@@ -7,16 +7,53 @@ import { db } from "../../firebaseConfig/firebaseConfig";
 import {
     collection,
     addDoc,
+    setDoc,
     serverTimestamp,
     doc,
     deleteDoc,
+    query,
+    getDoc,
+    updateDoc,
+    arrayUnion,
+    arrayRemove,
+    Timestamp,
 } from "firebase/firestore";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-export const TextInput = ({ messages, mainUser }) => {
+export const TextInput = ({ messages, mainUser, dialogs }) => {
     const [message, setMessage] = useState("");
-    const messagesCollectionRef = collection(db, "messages");
+
+    const params = useParams();
+    const userId = params.userId;
+
+    const createDialog = async (textBody) => {
+        const docSnap = await getDoc(
+            doc(db, "users", mainUser.id, "messages", userId)
+        );
+        if (!docSnap.data()) {
+            let newMessage = async () => {
+                await setDoc(
+                    doc(db, "users", mainUser.id, "messages", userId),
+                    {
+                        body: [
+                            { messageBody: textBody, date: Timestamp.now() },
+                        ],
+                    }
+                );
+            };
+            newMessage();
+        } else {
+            await updateDoc(doc(db, "users", mainUser.id, "messages", userId), {                
+                body: arrayUnion({
+                    messageBody: textBody,
+                    date: Timestamp.now(),
+                }),
+            });
+        }
+    };
 
     const sendUser = async (body) => {
+        const messagesCollectionRef = collection(db, "messages");
         let messagePayload = {
             name: mainUser.name,
             messageBody: body,
@@ -29,14 +66,32 @@ export const TextInput = ({ messages, mainUser }) => {
         const messageDoc = doc(db, "messages", id);
         await deleteDoc(messageDoc);
     };
+    const myDialog = async () => {         
+         const docSnap = await getDoc(
+            doc(db, "users", mainUser.id, "messages", userId)
+        );
+         return docSnap.data().body[0]
+    }
+const deliteDialog = async () => {
+    let data = await myDialog()  
+    if (data){
+        updateDoc(doc(db, "users", mainUser.id, "messages", userId), {      
+            body: arrayRemove(data)
+        });
+    }
+} 
 
     const handleChange = (event) => {
         setMessage(event.target.value);
     };
-    
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        sendUser(message);
+        if (dialogs) {
+            createDialog(message);
+        } else {
+            sendUser(message);
+        }
         setMessage("");
     };
 
@@ -68,8 +123,13 @@ export const TextInput = ({ messages, mainUser }) => {
                     color="primary"
                     className={styles.button}
                     onClick={() => {
-                        deleteMessages(messages[0].id);
-                        console.log(messages[0].id);
+                        if (dialogs) {
+                            deliteDialog()
+                        } else {
+                            deleteMessages(messages[0].id);
+                        }
+                        
+                        
                     }}
                 >
                     <RemoveCircleIcon />

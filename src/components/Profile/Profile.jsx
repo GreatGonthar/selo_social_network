@@ -21,11 +21,6 @@ function Profile() {
             break;
         }
     }
-    useEffect(() => {
-        if (!state.mainUser.name && !params.userId) {
-            navigate("/login");
-        }       
-    }, [params.userId]);
 
     return (
         <>

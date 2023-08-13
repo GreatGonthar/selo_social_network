@@ -6,7 +6,7 @@ import { SET_MAIN_USER } from "../../state/reducers";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../App";
 import { db } from "../../firebaseConfig/firebaseConfig";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, serverTimestamp } from "firebase/firestore";
 import useUsers from "../../hooks/useUsers";
 
 const Login = () => {
@@ -33,16 +33,14 @@ const Login = () => {
         let userIsBase = false;
         for (let i = 0; i < users.length; i++) {
             const obj = users[i];
-            if (obj.name === mainUser.name) {
+            if (obj.id === mainUser.id) {
                 userIsBase = true;
                 break;
             }
         }
         if (!userIsBase) {
             const createUser = async (mainUser) => {
-                await addDoc(usersCollectionRef, {
-                    ...mainUser,
-                });
+                await setDoc(doc(db, "users", `${mainUser.id}`), { ...mainUser }); 
             };
             createUser(mainUser);
         }
@@ -53,6 +51,9 @@ const Login = () => {
             payload: {
                 name: "гость",
                 photo: "https://upload.wikimedia.org/wikipedia/ru/thumb/7/78/Trollface.svg/1200px-Trollface.svg.png",
+                id: 123,
+                email: "нету",
+                date: Date.now()
             },
         });
     };

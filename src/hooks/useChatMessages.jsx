@@ -10,7 +10,7 @@ import { db } from "../firebaseConfig/firebaseConfig";
 import { GlobalContext } from "../App";
 import { SET_MESSAGE } from "../state/reducers";
 
-const useMessages = () => {
+const useChatMessages = () => {
     const { state, dispatch } = useContext(GlobalContext);
     const messagesCollectionRef = collection(db, "messages");
     const q = query(messagesCollectionRef, orderBy("date"), limit(30));
@@ -21,11 +21,23 @@ const useMessages = () => {
                 id: doc.id,
                 ...doc.data(),
             }));
-            dispatch({ type: SET_MESSAGE, payload: updatedData });
+            if (updatedData.length === 0) {
+                dispatch({
+                    type: SET_MESSAGE,
+                    payload: [
+                        {
+                            id: 0,
+                            name: "Система",
+                            date: { seconds: Date.now() / 1000 },
+                            messageBody: "пока нет сообщений",
+                        },
+                    ],
+                });
+            } else dispatch({ type: SET_MESSAGE, payload: updatedData });           
         });
         return () => unsubscribe(); // Отписываемся от подписки при размонтировании компонента
     }, []);
 
     return state.messages;
 };
-export default useMessages;
+export default useChatMessages;

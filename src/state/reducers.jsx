@@ -4,11 +4,7 @@ export const SET_MESSAGE = "set message";
 
 export const initialState = {
     mainUser: {
-        id: 0,
-        name: "",
-        email: "",
-        photo: "",
-        date: 0,
+
     },
     users: [],
     messages: [],
@@ -23,7 +19,6 @@ export function reducer(state, action) {
         case SET_MESSAGE:
             return { ...state, messages: [...action.payload] };
         default:
-            console.log("default");
             return state;
     }
 }
