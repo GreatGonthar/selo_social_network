@@ -12,9 +12,7 @@ import {
 import Avatar from "@mui/material/Avatar";
 import { Link } from "react-router-dom";
 import styles from "./UsersBox.module.css";
-import { GlobalContext } from "../../App"
-
-
+import { GlobalContext } from "../../App";
 
 export default function OneUserBox({
     content = "somebody text",
@@ -51,12 +49,12 @@ export default function OneUserBox({
                         <Link to={`/chat`} className={styles.a}>
                             <Button size="small">только общий чат</Button>
                         </Link>
-                    ) : (
+                    ) : state.mainUser.name ? (
                         <Link to={`/dialogs/${id}`} className={styles.a}>
                             <Button size="small">Написать</Button>
                         </Link>
-                    )
-                    }
+                    ) : (   <Button size="small">X</Button>         
+                    )}
 
                     <Button size="small">cancel</Button>
                 </CardActions>

@@ -31,11 +31,11 @@ function RoutesComponent() {
                 <Route exact path="/" element={<div>main menu</div>} />
                 <Route exact path="/profile/" element={<Profile />} />
                 <Route path="/profile/:userId?" element={<Profile />} />
-                <Route path="/chat" element={<ChatBox />} />
+                <Route path="/chat" element={<ChatBox dialogs={false}/>} />
                 <Route exact path="/dialogs" element={<UsersBox />} />
                 <Route
                     path="/dialogs/:userId?"
-                    element={<DialogBox />}
+                    element={<DialogBox dialogs={true}/>}
                 />
                 <Route exact path="/users/" element={<UsersBox />} />
                 <Route path="/users/:usersPage?" element={<UsersBox />} />

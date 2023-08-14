@@ -11,24 +11,26 @@ import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { NavLink } from "react-router-dom";
 import { GlobalContext } from "../../App";
 import { Paper, Avatar } from "@mui/material";
-import { deepOrange} from '@mui/material/colors';
-import {SET_MAIN_USER} from "../../state/reducers"
+import { deepOrange } from "@mui/material/colors";
+import { SET_MAIN_USER } from "../../state/reducers";
+import { SET_USERS } from "../../state/reducers";
 import { useNavigate } from "react-router-dom";
 
 const ButtonAppBar = () => {
     const { state, dispatch } = useContext(GlobalContext);
     const navigate = useNavigate();
     const profileExit = () => {
-        const payload = {
-            id: 0,
+        const hollowMainUser = {
+            id: null,
             name: "",
             email: "",
             photo: "",
             date: 0,
-        }
-        dispatch({type: SET_MAIN_USER, payload})
+        };
+        dispatch({ type: SET_MAIN_USER, payload: hollowMainUser });
+        dispatch({ type: SET_USERS, payload: [] });
         navigate("/login");
-    }
+    };
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -53,7 +55,12 @@ const ButtonAppBar = () => {
                     {state.mainUser.name ? (
                         <div style={{ display: "flex", alignItems: "center" }}>
                             {state.mainUser.name === "гость" ? (
-                                <Avatar sx={{ bgcolor: deepOrange[500], marginRight: "1em" }}>
+                                <Avatar
+                                    sx={{
+                                        bgcolor: deepOrange[500],
+                                        marginRight: "1em",
+                                    }}
+                                >
                                     Г
                                 </Avatar>
                             ) : (
@@ -63,11 +70,14 @@ const ButtonAppBar = () => {
                                     style={{ marginRight: "1em" }}
                                 ></Avatar>
                             )}
-                         
-                                <Button variant={"outlined"} color="inherit" onClick={profileExit}>
-                                    выход
-                                </Button>
-                            
+
+                            <Button
+                                variant={"outlined"}
+                                color="inherit"
+                                onClick={profileExit}
+                            >
+                                выход
+                            </Button>
                         </div>
                     ) : (
                         <NavLink to={"/login"}>

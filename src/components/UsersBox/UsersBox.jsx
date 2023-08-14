@@ -3,9 +3,10 @@ import { Paper } from "@mui/material";
 import OneUserBox from "./OneUserBox";
 import styles from "./UsersBox.module.css";
 import useUsers from "../../hooks/useUsers";
+import { GlobalContext } from "../../App";
 
 export default function UsersBox() {
-
+    const { state, dispatch } = useContext(GlobalContext);
        let users = useUsers();
        
     if (users.length === 0) {
@@ -17,14 +18,16 @@ export default function UsersBox() {
                     <Paper id="style-1" className={styles.messagesBody}>
                         <section className={styles.barb} id="biryani">                           
                             {users.map((item, index) => {
-                                return (
-                                    <OneUserBox
-                                        imgUrl={item.photo}
-                                        content={item.email}
-                                        userName={item.name}
-                                        id={item.id}
-                                    />
-                                );
+                                if(item.id !== state.mainUser.id){
+                                    return (
+                                        <OneUserBox
+                                            imgUrl={item.photo}
+                                            content={item.email}
+                                            userName={item.name}
+                                            id={item.id}
+                                        />
+                                    );
+                                }
                             })}
                         </section>
                     </Paper>

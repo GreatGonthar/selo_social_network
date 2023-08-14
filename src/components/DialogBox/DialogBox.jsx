@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { GlobalContext } from "../../App";
 import useDialogMessages from "../../hooks/useDialogMessages";
-import { useParams, useNavigate } from "react-router-dom";
 import MessagesBox from "./MessagesBox";
 
 export default function DialogBox({dialogs = true }) {

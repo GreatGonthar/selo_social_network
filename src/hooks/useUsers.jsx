@@ -9,23 +9,14 @@ const useUsers = () => {
     const usersCollectionRef = collection(db, "users");
     window.state = state;
     useEffect(() => {
-        // if (state.mainUser.id) {
         const unsubscribe = onSnapshot(usersCollectionRef, (snapshot) => {
             const updatedData = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
-           
-                let userSubscriberIndex = updatedData.findIndex(
-                    (item) => item.id === state.mainUser.id
-                );
-                console.log(userSubscriberIndex)
-                if(userSubscriberIndex !== -1){updatedData.splice(userSubscriberIndex, 1)};
-                dispatch({ type: SET_USERS, payload: updatedData });
-            });
-            return () => unsubscribe(); // Отписываемся от подписки при размонтировании компонента
-        // }
-        // }
+            dispatch({ type: SET_USERS, payload: updatedData });
+        });
+        return () => unsubscribe(); // Отписываемся от подписки при размонтировании компонента
     }, []);
 
     return state.users;
