@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/selo_social_network/static/css/main.497c800d.css",
+    "main.js": "/selo_social_network/static/js/main.0a22c003.js",
+    "static/js/787.6da94edd.chunk.js": "/selo_social_network/static/js/787.6da94edd.chunk.js",
+    "index.html": "/selo_social_network/index.html",
+    "main.497c800d.css.map": "/selo_social_network/static/css/main.497c800d.css.map",
+    "main.0a22c003.js.map": "/selo_social_network/static/js/main.0a22c003.js.map",
+    "787.6da94edd.chunk.js.map": "/selo_social_network/static/js/787.6da94edd.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.497c800d.css",
+    "static/js/main.0a22c003.js"
+  ]
+}
