@@ -5,3 +5,6 @@
 .default {
     text-decoration: none;
 }
+.down {
+    color: orange;
+}

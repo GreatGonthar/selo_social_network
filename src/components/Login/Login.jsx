@@ -28,6 +28,7 @@ const Login = () => {
             date: result.user.metadata.lastSignInTime,
         };
 
+        localStorage.mainUser =  JSON.stringify(mainUser)
         dispatch({ type: SET_MAIN_USER, payload: mainUser });
 
         let userIsBase = false;

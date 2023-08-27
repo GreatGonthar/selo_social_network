@@ -16,14 +16,32 @@ import { blue } from "@mui/material/colors";
 import styles from "./NavMenu.module.css";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { styled } from "@mui/material/styles";
 
-const NavMenu = () => {
+// const MyBox = styled('div')(({ theme }) => ({
+//     // padding: theme.spacing(1),
+//     [theme.breakpoints.down('sm')]: {
+//       marginTop: "100px",
+//       paddingLeft: "20px",
+//       paddingRight: "50px"
+//     }
+//   }));
+
+const NavMenu = ({ xs = "none", sm = "block", setOpen = () => false }) => {
     const [route, setRoute] = useState(
         useLocation().pathname.split("/").slice(1)
     );
 
     return (
-        <Box sx={{ width: "100%" }}>
+        <Box
+            sx={{
+                width: "100%",
+                px: { sm: 0, xs: "0px" },
+                mt: { sm: 0, xs: "130px" },
+                display: { xs: xs, sm: sm },
+            }}
+            onClick={() => setOpen(false)}
+        >
             <nav aria-label="main mailbox folders">
                 <List>
                     <NavLink
@@ -54,7 +72,7 @@ const NavMenu = () => {
                     >
                         <MenuElem icon={<PeopleAltIcon />} text="Users" />
                     </NavLink>
-                    <NavLink
+                    {/* <NavLink
                         to="/news"
                         className={styles.default}
                         activeClassName={styles.active}
@@ -74,15 +92,15 @@ const NavMenu = () => {
                         activeClassName={styles.active}
                     >
                         <MenuElem icon={<NewspaperIcon />} text="UlbiTvChat" />
-                    </NavLink>
+                    </NavLink> */}
                 </List>
             </nav>
             <Divider />
 
             <nav aria-label="secondary mailbox folders">
                 <List>
-                    <MenuElem text="trash" />
-                    <MenuElem text="span" />
+                    {/* <MenuElem text="trash" />
+                    <MenuElem text="span" /> */}
                 </List>
             </nav>
         </Box>
@@ -91,20 +109,3 @@ const NavMenu = () => {
 
 export default NavMenu;
 
-// import React, { Component }  from 'react';
-// import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
-// import classes from "./Nav.module.css"
-
-// const Nav = () => {
-//     return <nav className={classes.nav}>
-//         <NavLink to="/profile" className={classes.default} activeClassName={classes.active}>Profile</NavLink>
-//         <NavLink to="/messages" className={classes.default} activeClassName={classes.active}>Messages</NavLink>
-//         <NavLink to="/Users" className={classes.default} activeClassName={classes.active}>Users</NavLink>
-//         <NavLink to="/NewYear" className={classes.default} activeClassName={classes.active}>NewYear 2023</NavLink>
-//         <NavLink to="/weather" className={classes.default} activeClassName={classes.active}>Weather</NavLink>
-//         <NavLink to="/Close" className={classes.default} activeClassName={classes.active}>Close</NavLink>
-
-//     </nav>
-// }
-
-// export default Nav;

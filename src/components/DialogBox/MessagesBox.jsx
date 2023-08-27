@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Paper } from "@mui/material";
+import { Paper, Box } from "@mui/material";
 import { TextInput } from "./TextInput";
 import { MessageLeft, MessageRight } from "./Message";
 import styles from "./DialogBox.module.css";
@@ -7,7 +7,7 @@ import styles from "./DialogBox.module.css";
 export default function MessagesBox({messages, state, dialogs}) {
     let reversedMessages = [...messages].reverse();
         return (
-            <div className={styles.container}>
+            <Box component="div" sx={{ overflowY: 'hidden', height: "100%" }}>           
                 <Paper className={styles.paper} zDepth={2}>
                     <Paper id="style-1" className={styles.messagesBody}>
                         {reversedMessages.map((elem) => {
@@ -35,7 +35,7 @@ export default function MessagesBox({messages, state, dialogs}) {
                     </Paper>
                     <TextInput messages={messages} mainUser={state.mainUser} dialogs={dialogs}/>
                 </Paper>
-            </div>
+            </Box>
         );
     }
 

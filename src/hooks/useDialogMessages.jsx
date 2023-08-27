@@ -5,7 +5,7 @@ import { GlobalContext } from "../App";
 import { SET_MESSAGE } from "../state/reducers";
 import { useParams } from "react-router-dom";
 
-const useDialogMessages = () => {
+const useDialogMessages = () => {    
     const params = useParams();
     const userId = params.userId;
     const { state, dispatch } = useContext(GlobalContext);
@@ -28,31 +28,41 @@ const useDialogMessages = () => {
         const getMainUserMessages = onSnapshot(
             messagesCollection,
             (snapshot) => {
-                let data = snapshot.data();
+                let data = snapshot.data();    
+
+                console.log("data", data)            
                 let userSubscriberIndex = state.users.findIndex(
-                    (item) => item.id === userId
+                    (item) => item.id === userId                   
                 );
-                const updatedData = data.body.map((elem) => ({
-                    id: state.mainUser.id,
-                    name: state.mainUser.name,
-                    date: elem.date,
-                    messageBody: elem.messageBody,
-                }));
+                let updatedData = []
+                if (data) {
+                    updatedData = data.body.map((elem) => ({
+                        id: state.mainUser.id,
+                        name: state.mainUser.name,
+                        date: elem.date,
+                        messageBody: elem.messageBody,
+                    }));
+                }
+
 
                 const getSubscriberMessages = onSnapshot(
                     subscriberMessagesCollection,
                     (snapshot) => {
-                        let data = snapshot.data();
-                        const updatedData2 = data.body.map((elem) => ({
-                            id: userId,
+                        let data = snapshot.data(); 
+                        let updatedData2 = []
+                        if (data) {
+                            updatedData2 = data.body.map((elem) => ({
+                                id: userId,
                             name: state.users[userSubscriberIndex].name,
                             date: elem.date,
                             messageBody: elem.messageBody,
-                        }));
-
+                            }));
+                        }                      
+   
+                        console.log("data2", data)
                         const finishData = [...updatedData, ...updatedData2];
                         finishData.sort((a, b) => a.date - b.date);
-
+                        
                         if (finishData.length === 0) {
                             dispatch({
                                 type: SET_MESSAGE,

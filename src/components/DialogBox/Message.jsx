@@ -23,7 +23,7 @@ export const MessageLeft = (props) => {
     const displayName = props.displayName ? props.displayName : "гость";
     const timestamp =
         props.timestamp === null
-            ? "время загружается..."
+            ? "сейчас"
             : date(+props.timestamp.seconds);
 
     return (
@@ -62,7 +62,7 @@ export const MessageRight = (props) => {
     const message = props.message ? props.message : "no message";
     const timestamp =
         props.timestamp === null
-            ? "время загружается..."
+            ? "сейчас"
             : date(+props.timestamp.seconds);
     return (
         <div className={styles.messageRowRight}>

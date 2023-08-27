@@ -2,10 +2,14 @@ export const SET_USERS = "set users";
 export const SET_MAIN_USER = "set main user";
 export const SET_MESSAGE = "set message";
 
-export const initialState = {
-    mainUser: {
+let mainUserData = () => {
+    if(localStorage.mainUser){
+        return (JSON.parse(localStorage.mainUser) )    
+    }else return {}
+}
 
-    },
+export const initialState = {
+    mainUser: mainUserData(),
     users: [],
     messages: [],
 };

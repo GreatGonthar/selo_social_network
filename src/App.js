@@ -15,27 +15,27 @@ export const GlobalContext = React.createContext();
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <BrowserRouter>
+    <HashRouter>
       <GlobalContext.Provider value={{state, dispatch}}>
-        <div>
+      <Box component="div" sx={{ overflow: 'hidden' }}>
           <ButtonAppBar />
           <Grid
             container
             sx={{
               width: "100%",
-              height: "100vh",
+              // height: "100vh",
             }}
           >
-            <Grid item xs={2}>
-              <NavMenu />
+            <Grid item xs={0} sm={2}>
+              <NavMenu xs="none" sm="block"/>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={12} sm={10}>
             <RoutesComponent/>
             </Grid>
           </Grid>
-        </div>
+        </Box>
       </GlobalContext.Provider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 // SeloChatAdmin

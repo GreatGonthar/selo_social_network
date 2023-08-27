@@ -20,6 +20,8 @@ import {
 } from "firebase/firestore";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
+const MAX_MESSAGES = 10;
+
 export const TextInput = ({ messages, mainUser, dialogs }) => {
     const [message, setMessage] = useState("");
 
@@ -43,12 +45,20 @@ export const TextInput = ({ messages, mainUser, dialogs }) => {
             };
             newMessage();
         } else {
-            await updateDoc(doc(db, "users", mainUser.id, "messages", userId), {                
-                body: arrayUnion({
-                    messageBody: textBody,
-                    date: Timestamp.now(),
-                }),
-            });
+            if (docSnap.data().body.length >= MAX_MESSAGES) {
+                console.log("больше 10");
+                deliteDialog()
+            } 
+                await updateDoc(
+                    doc(db, "users", mainUser.id, "messages", userId),
+                    {
+                        body: arrayUnion({
+                            messageBody: textBody,
+                            date: Timestamp.now(),
+                        }),
+                    }
+                );
+            
         }
     };
 
@@ -59,6 +69,9 @@ export const TextInput = ({ messages, mainUser, dialogs }) => {
             messageBody: body,
             date: serverTimestamp(),
         };
+        if (messages.length >= MAX_MESSAGES) {
+            deleteMessages(messages[0].id);
+        }
         await addDoc(messagesCollectionRef, messagePayload);
     };
 
@@ -66,20 +79,24 @@ export const TextInput = ({ messages, mainUser, dialogs }) => {
         const messageDoc = doc(db, "messages", id);
         await deleteDoc(messageDoc);
     };
-    const myDialog = async () => {         
-         const docSnap = await getDoc(
+    const myDialog = async () => {
+        const docSnap = await getDoc(
             doc(db, "users", mainUser.id, "messages", userId)
-        );
-         return docSnap.data().body[0]
-    }
-const deliteDialog = async () => {
-    let data = await myDialog()  
-    if (data){
-        updateDoc(doc(db, "users", mainUser.id, "messages", userId), {      
-            body: arrayRemove(data)
-        });
-    }
-} 
+        );        
+        if (docSnap.data().body.length > 0){          
+            return docSnap.data().body;
+        } else {
+            return false
+        }
+    };
+    const deliteDialog = async () => {
+        let data = await myDialog();       
+        if (data) {
+            updateDoc(doc(db, "users", mainUser.id, "messages", userId), {
+                body: arrayRemove(data[0]),
+            });
+        }
+    };
 
     const handleChange = (event) => {
         setMessage(event.target.value);
@@ -118,22 +135,21 @@ const deliteDialog = async () => {
                 >
                     <SendIcon />
                 </Button>
-                <Button
+                {mainUser.id === "bxlsBiB4VMVs3n1dF1bNIh3vRcH3" && 
+                <Button                   
                     variant="contained"
                     color="primary"
                     className={styles.button}
                     onClick={() => {
                         if (dialogs) {
-                            deliteDialog()
+                            deliteDialog();
                         } else {
                             deleteMessages(messages[0].id);
                         }
-                        
-                        
                     }}
                 >
                     <RemoveCircleIcon />
-                </Button>
+                </Button>}
             </form>
         </>
     );
